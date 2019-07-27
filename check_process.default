@@ -6,7 +6,22 @@
 		language="fr"
 		is_public=1	(PUBLIC|public=1|private=0)
 		password="pass"
-		port="666"	(PORT)
+		coop_name="YunoFoodCoop"
+		street_address="YunoStreet"
+		zip_code="YunoZipCode"
+		city="YunoCity"
+		country="YunoCountry"
+		contact_email="YunoContactEmail"
+		contact_number="YunoContactNumber"
+		timezone="YunoTimezone"
+		currency_symbol="YunoCurrencySymbol"
+		price_markup="YunoPriceMarkup"
+		tax_vat_percentage="YunoTaxVatPercentage"
+		use_wiki_plugin=1	(PUBLIC|public=1|private=0)
+		use_messages_plugin=1	(PUBLIC|public=1|private=0)
+		notification_reply_email="YunoReplyEmail"
+		notification_sender_email="YunoSenderEmail"
+		admin_email="YunoAdmin"
 	; Checks
 		pkg_linter=1
 		setup_sub_dir=1
@@ -28,4 +43,4 @@ Notification=none
 ;;; Upgrade options
 	; commit=CommitHash
 		name=Name and date of the commit.
-		manifest_arg=domain=DOMAIN&path=PATH&admin=USER&language=fr&is_public=1&password=pass&port=666&
+		manifest_arg=domain=DOMAIN&path=PATH&admin=USER&language=fr&is_public=1&password=pass

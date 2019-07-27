@@ -3,12 +3,11 @@
     "id": "foodsoft",
     "packaging_format": 1,
     "description": {
-        "en": "Foodsoft for Yunohost.",
-        "fr": "Foodsoft pour YunoHost."
+        "en": "Web-based software to manage a non-profit food coop (product catalog, ordering, accounting, job scheduling)"
     },
     "version": "1.0~ynh1",
     "url": "https://foodcoops.github.io/foodsoft-hosting/",
-    "license": "AGPL",
+    "license": "AGPL-3.0-or-later",
     "maintainer": {
         "name": "decentral1se",
         "email": "lukewm@riseup.net",
@@ -20,6 +19,7 @@
     "multi_instance": true,
     "services": [
         "nginx",
+        "redis",
         "mysql"
     ],
     "arguments": {
@@ -40,8 +40,8 @@
                     "en": "Choose a path for foodsoft",
                     "fr": "Choisissez un chemin pour foodsoft"
                 },
-                "example": "/example",
-                "default": "/example"
+                "example": "/foodcoop",
+                "default": "/foodcoop"
             },
             {
                 "name": "admin",
@@ -50,7 +50,7 @@
                     "en": "Choose an admin user",
                     "fr": "Choisissez l’administrateur"
                 },
-                "example": "johndoe"
+                "example": "harraway"
             },
             {
                 "name": "is_public",
@@ -69,7 +69,7 @@
                     "fr": "Choisissez la langue de l'application"
                 },
                 "choices": ["fr", "en"],
-                "default": "fr"
+                "default": "en"
             },
             {
                 "name": "password",
@@ -83,6 +83,148 @@
                     "fr": "Utilisez le champ aide pour ajouter une information à l'intention de l'administrateur à propos de cette question."
                 },
                 "example": "Choose a password"
+            },
+            {
+                "name": "coop_name",
+                "type": "string",
+                "ask": {
+                    "en": "Name of the cooperative"
+                },
+                "default": "YunoFoodCoop",
+                "example": "YunoFoodCoop"
+            },
+            {
+                "name": "street_address",
+                "type": "string",
+                "ask": {
+                    "en": "Street address of the cooperative"
+                },
+                "default": "Grüne Straße 103",
+                "example": "Grüne Straße 103"
+            },
+            {
+                "name": "zip_code",
+                "type": "string",
+                "ask": {
+                    "en": "Zip code of the cooperative"
+                },
+                "default": "10997",
+                "example": "10997"
+            },
+            {
+                "name": "city",
+                "type": "string",
+                "ask": {
+                    "en": "City of the cooperative"
+                },
+                "default": "Amsterdam",
+                "example": "Amsterdam"
+            },
+            {
+                "name": "country",
+                "type": "string",
+                "ask": {
+                    "en": "Country of the cooperative"
+                },
+                "default": "The Netherlands",
+                "example": "The Netherlands"
+            },
+            {
+                "name": "contact_email",
+                "type": "string",
+                "ask": {
+                    "en": "Contact email of the cooperative"
+                },
+                "default": "foodsoft@foodcoop.test",
+                "example": "foodsoft@foodcoop.test"
+            },
+            {
+                "name": "contact_number",
+                "type": "string",
+                "ask": {
+                    "en": "Contact number of the cooperative"
+                },
+                "default": "030 323 23249",
+                "example": "030 323 23249"
+            },
+            {
+                "name": "timezone",
+                "type": "string",
+                "ask": {
+                    "en": "Timezone of the cooperative"
+                },
+                "default": "Amsterdam",
+                "example": "Amsterdam"
+            },
+            {
+                "name": "currency_symbol",
+                "type": "string",
+                "ask": {
+                    "en": "Currency symbol of the cooperative"
+                },
+                "default": "€",
+                "example": "€"
+            },
+            {
+                "name": "price_markup",
+                "type": "string",
+                "ask": {
+                    "en": "Price markup of the cooperative"
+                },
+                "default": "2.0",
+                "example": "2.0"
+            },
+            {
+                "name": "tax_vat_percentage",
+                "type": "string",
+                "ask": {
+                    "en": "Tax VAT percentage of the cooperative"
+                },
+                "default": "7.0",
+                "example": "7.0"
+            },
+            {
+                "name": "use_wiki_plugin",
+                "type": "boolean",
+                "ask": {
+                    "en": "Do you want to use the internal Wiki?"
+                },
+                "default": false
+            },
+            {
+                "name": "use_messages_plugin",
+                "type": "boolean",
+                "ask": {
+                    "en": "Do you want to use the internal messaging service?"
+                },
+                "default": false
+            },
+            {
+                "name": "notification_sender_email",
+                "type": "string",
+                "ask": {
+                    "en": "Address from which to send email"
+                },
+                "default": "foodsoft@foodcoop.test",
+                "example": "foodsoft@foodcoop.test"
+            },
+            {
+                "name": "notification_reply_email",
+                "type": "string",
+                "ask": {
+                    "en": "Address from which to receive email"
+                },
+                "default": "foodsoft@foodcoop.test",
+                "example": "foodsoft@foodcoop.test"
+            },
+            {
+                "name": "admin_email",
+                "type": "string",
+                "ask": {
+                    "en": "Admin email address"
+                },
+                "default": "admin@foodcoop.test",
+                "example": "admin@foodcoop.test"
             }
         ]
     }
