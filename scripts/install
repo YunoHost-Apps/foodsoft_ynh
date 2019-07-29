@@ -257,11 +257,11 @@ yunohost service add resque --description "resque daemon" --log $resque_log_file
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting the systemd services..." --weight=5
 
-ynh_systemd_action --service_name=foodsoft --action="start" --log_path=$foodsoft_log_file
-
-ynh_systemd_action --service_name=resque --action="start" --log_path=$resque_log_file
+# TODO(decentral1se)
+# ynh_script_progression --message="Starting the systemd services..." --weight=5
+# ynh_systemd_action --service_name=foodsoft --action="start" --log_path=$foodsoft_log_file
+# ynh_systemd_action --service_name=resque --action="start" --log_path=$resque_log_file
 
 #=================================================
 # SETUP SSOWAT
