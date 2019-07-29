@@ -67,7 +67,6 @@ ynh_app_setting_set --app=$app --key=country --value=$country
 ynh_app_setting_set --app=$app --key=contact_email --value=$contact_email
 ynh_app_setting_set --app=$app --key=contact_number --value=$contact_number
 ynh_app_setting_set --app=$app --key=timezone --value=$timezone
-ynh_app_setting_set --app=$app --key=currency_symbol --value=$currency_symbol
 ynh_app_setting_set --app=$app --key=price_markup --value=$price_markup
 ynh_app_setting_set --app=$app --key=tax_vat_percentage --value=$tax_vat_percentage
 ynh_app_setting_set --app=$app --key=use_wiki_plugin --value=$use_wiki_plugin

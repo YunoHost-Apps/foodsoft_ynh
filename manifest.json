@@ -48,7 +48,7 @@
                 "type": "user",
                 "ask": {
                     "en": "Choose an admin user",
-                    "fr": "Choisissez l’administrateur"
+                    "fr": "Choisissez l'administrateur"
                 },
                 "example": "harraway"
             },
@@ -99,8 +99,8 @@
                 "ask": {
                     "en": "Street address of the cooperative"
                 },
-                "default": "Grüne Straße 103",
-                "example": "Grüne Straße 103"
+                "default": "Grune Strasse 103",
+                "example": "Grune Strasse 103"
             },
             {
                 "name": "zip_code",
@@ -155,15 +155,6 @@
                 },
                 "default": "Amsterdam",
                 "example": "Amsterdam"
-            },
-            {
-                "name": "currency_symbol",
-                "type": "string",
-                "ask": {
-                    "en": "Currency symbol of the cooperative"
-                },
-                "default": "€",
-                "example": "€"
             },
             {
                 "name": "price_markup",
