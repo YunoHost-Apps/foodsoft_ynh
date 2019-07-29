@@ -242,15 +242,9 @@ ynh_add_nginx_config
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..." --weight=1
+ynh_script_progression --message="Configuring system user..." --weight=3
 
 ynh_system_user_create --username=$app
-
-app_user_password=$(ynh_string_random 8)
-
-yunohost user update $app --change-password $app_user_password
-
-ynh_app_setting_set --app=$app --key=app_user_password --value=$app_user_password
 
 #=================================================
 # SETUP SYSTEMD BASED SERVICES
@@ -267,7 +261,9 @@ smtp_domain=$smtp_domain
 smtp_address=$app@$smtp_domain
 smtp_port=25
 smtp_user_name=$app
-smtp_password=$app_user_password
+
+# TODO(decentral1se): figure out what to do here
+smtp_password=__TODO__
 
 ynh_app_setting_set --app=$app --key=queue_name --value=$queue_name
 
