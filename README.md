@@ -68,6 +68,7 @@ You can also watch the video walkthrough of using the application over at Vimeo:
 ## Additional information
 
 * [Foodsoft mailing lists](http://foodsoft.51229.x6.nabble.com/)
+* [YunoHost forum community package topic](https://forum.yunohost.org/t/community-app-foodsoft-software-to-manage-a-non-profit-food-coop/8615)
 
 ## Links
 
