@@ -5,7 +5,7 @@ production:
   name: __NAME__
   contact:
     street: __STREET_ADDRESS__
-    zip_code: __ZIP_CODE
+    zip_code: __ZIP_CODE__
     city: __CITY__
     country: __COUNTRY__
     email: __CONTACT_EMAIL__
