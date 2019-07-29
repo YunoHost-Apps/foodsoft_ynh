@@ -157,7 +157,7 @@ cd $final_path
 /opt/rbenv/versions/$ruby_version/bin/bundle config build.nokogiri "--use-system-libraries"
 /opt/rbenv/versions/$ruby_version/bin/bundle install --deployment --without development test -j 2
 
-cd - 
+cd -
 
 #=================================================
 # RUN DATABASE SETUP AND MIGRATION WITH ROOT USER
@@ -168,7 +168,11 @@ cp ../conf/db_setup.yml $final_path/config/database.yml
 
 ynh_replace_string --match_string="__DB_NAME__" --replace_string=$db_name --target_file=$final_path/config/database.yml
 
+cd $final_path
+
 /opt/rbenv/versions/$ruby_version/bin/bundle exec rake db:setup RAILS_ENV=production SECRET_KEY_BASE=$secret_key_base
+
+cd -
 
 #=================================================
 # RUN DATABASE MIGRATION WITH APPLICATION USER
@@ -183,14 +187,22 @@ ynh_replace_string --match_string="__DB_NAME__" --replace_string=$db_name --targ
 ynh_replace_string --match_string="__DB_PASSWORD__" --replace_string=$db_pwd --target_file=$final_path/config/database.yml
 ynh_replace_string --match_string="__DB_USER__" --replace_string=$db_user --target_file=$final_path/config/database.yml
 
+cd $final_path
+
 /opt/rbenv/versions/$ruby_version/bin/bundle exec rake db:migrate RAILS_ENV=production SECRET_KEY_BASE=$secret_key_base
+
+cd -
 
 #=================================================
 # PRE-COMPILE ASSETS
 #=================================================
 ynh_script_progression --message="Pre-compiling application assets..." --weight=40
 
+cd $final_path
+
 /opt/rbenv/versions/$ruby_version/bin/bundle exec rake assets:precompile RAILS_ENV=production SECRET_KEY_BASE=$secret_key_base
+
+cd -
 
 #=================================================
 # NGINX CONFIGURATION
