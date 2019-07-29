@@ -165,8 +165,8 @@ ynh_replace_string --match_string="__PRICE_MARKUP__" --replace_string=$price_mar
 ynh_replace_string --match_string="__TAX_VAT_PERCENTAGE__" --replace_string=$tax_vat_percentage --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__USE_WIKI_PLUGIN__" --replace_string=$use_wiki_plugin --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__USE_MESSAGES_PLUGIN__" --replace_string=$use_messages_plugin --target_file=$final_path/config/app_config.yml
-ynh_replace_string --match_string="__NOTIFICATION_SENDER_EMAIL__ " --replace_string=$notification_sender_email --target_file=$final_path/config/app_config.yml
-ynh_replace_string --match_string="__NOTIFICATION_REPLY_EMAIL__ " --replace_string=$notification_reply_email --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__NOTIFICATION_SENDER_EMAIL__" --replace_string=$notification_sender_email --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__NOTIFICATION_REPLY_EMAIL__" --replace_string=$notification_reply_email --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__ADMIN_EMAIL__" --replace_string=$admin_email --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__PORT__" --replace_string=$port --target_file=$final_path/config/app_config.yml
 
