@@ -120,9 +120,9 @@ ynh_install_ruby $ruby_version
 #=================================================
 ynh_script_progression --message="Finding a free port..." --weight=2
 
-rails_port=$(ynh_find_port --port=3000)
+port=$(ynh_find_port --port=3000)
 
-ynh_app_setting_set --app=$app --key=rails_port --value=$rails_port
+ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
 # GENERATE CONFIGURATION SECRETS
@@ -168,7 +168,7 @@ ynh_replace_string --match_string="__USE_MESSAGES_PLUGIN__" --replace_string=$us
 ynh_replace_string --match_string="__NOTIFICATION_SENDER_EMAIL__ " --replace_string=$notification_sender_email --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__NOTIFICATION_REPLY_EMAIL__ " --replace_string=$notification_reply_email --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__ADMIN_EMAIL__" --replace_string=$admin_email --target_file=$final_path/config/app_config.yml
-ynh_replace_string --match_string="__PORT__" --replace_string=$rails_port --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__PORT__" --replace_string=$port --target_file=$final_path/config/app_config.yml
 
 #=================================================
 # INSTALL APPLICATION DEPENDENCIES
