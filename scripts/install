@@ -258,32 +258,39 @@ ynh_app_setting_set --app=$app --key=app_user_password --value=$app_user_passwor
 ynh_script_progression --message="Configuring the systemd services..." --weight=1
 
 ynh_add_systemd_config --service=foodsoft --template=foodsoft
-cp ../conf/foodsoft.env /etc/systemd/system/foodsoft.env
 
-queue_name=foodsoft_notifier
-ynh_app_setting_set --app=$app --key=queue_name --value=$queue_name
+ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.service
+ynh_replace_string --match_string="__LOG_FILE__" --replace_string=$foodsoft_log_file --target_file=/etc/systemd/system/foodsoft.service
 
+queue_name=$app
 smtp_domain=$smtp_domain
 smtp_address=$app@$smtp_domain
 smtp_port=25
 smtp_user_name=$app
 smtp_password=$app_user_password
 
-ynh_replace_string --match_string="__REDIS_URL__" --replace_string="127.0.0.1" --target_file=/etc/systemd/system/foodsoft.service
-ynh_replace_string --match_string="__SECRET_KEY_BASE__" --replace_string=$secret_key_base --target_file=/etc/systemd/system/foodsoft.service
-ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/foodsoft.service
-ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.service
-ynh_replace_string --match_string="__LOG_FILE__" --replace_string=$foodsoft_log_file --target_file=/etc/systemd/system/foodsoft.service
-ynh_replace_string --match_string="__SMTP_DOMAIN__" --replace_string=$smtp_domain --target_file=/etc/systemd/system/foodsoft.service
-ynh_replace_string --match_string="__SMTP_ADDRESS__" --replace_string=$smtp_address --target_file=/etc/systemd/system/foodsoft.service
-ynh_replace_string --match_string="__SMTP_PORT__" --replace_string=$smtp_port --target_file=/etc/systemd/system/foodsoft.service
-ynh_replace_string --match_string="__SMTP_USER_NAME__" --replace_string=$smtp_user_name --target_file=/etc/systemd/system/foodsoft.service
-ynh_replace_string --match_string="__SMTP_PASSWORD__" --replace_string=$smtp_password --target_file=/etc/systemd/system/foodsoft.service
+ynh_app_setting_set --app=$app --key=queue_name --value=$queue_name
+
+cp ../conf/foodsoft.env /etc/systemd/system/foodsoft.env
+
+ynh_replace_string --match_string="__REDIS_URL__" --replace_string="127.0.0.1" --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SECRET_KEY_BASE__" --replace_string=$secret_key_base --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__LOG_FILE__" --replace_string=$foodsoft_log_file --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SMTP_DOMAIN__" --replace_string=$smtp_domain --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SMTP_ADDRESS__" --replace_string=$smtp_address --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SMTP_PORT__" --replace_string=$smtp_port --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SMTP_USER_NAME__" --replace_string=$smtp_user_name --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SMTP_PASSWORD__" --replace_string=$smtp_password --target_file=/etc/systemd/system/foodsoft.env
 
 ynh_add_systemd_config --service=resque  --template=resque
+
+ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/resque.service
+
 cp ../conf/resque.env /etc/systemd/system/resque.env
 
-ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/resque.service
+ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/resque.env
 
 #=================================================
 # MANAGE PERMISSIONS
