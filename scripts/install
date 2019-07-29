@@ -120,7 +120,7 @@ ynh_script_progression --message="Finding a free port..." --weight=2
 
 rails_port=$(ynh_find_port --port=3000)
 
-ynh_app_setting_set --app=$rails_port --key=port --value=$rails_port
+ynh_app_setting_set --app=$app --key=rails_port --value=$rails_port
 
 #=================================================
 # GENERATE CONFIGURATION SECRETS
@@ -129,7 +129,7 @@ ynh_script_progression --message="Generating configuration secrets..." --weight=
 
 secret_key_base=$(ynh_string_random 128)
 
-ynh_app_setting_set --app=$secret_key_base --key=secret_key_base --value=$secret_key_base
+ynh_app_setting_set --app=$app --key=secret_key_base --value=$secret_key_base
 
 #=================================================
 # SETUP LOG FILE LOCATION
@@ -139,8 +139,8 @@ ynh_script_progression --message="Configuring log file location..." --weight=1
 foodsoft_log_file=/var/log/foodsoft.log
 resque_log_file=/var/log/resque.log
 
-ynh_app_setting_set --app=$foodsoft_log_file--key=foodsoft_log_file --value=$foodsoft_log_file
-ynh_app_setting_set --app=$resque_log_file--key=resque_log_file --value=$resque_log_file
+ynh_app_setting_set --app=$app --key=foodsoft_log_file --value=$foodsoft_log_file
+ynh_app_setting_set --app=$app --key=resque_log_file --value=$resque_log_file
 
 #=================================================
 # INSTALL APPLICATION DEPENDENCIES
