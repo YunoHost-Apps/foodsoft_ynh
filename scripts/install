@@ -23,22 +23,22 @@ is_public=$YNH_APP_ARG_IS_PUBLIC
 language=$YNH_APP_ARG_LANGUAGE
 password=$YNH_APP_ARG_PASSWORD
 app=$YNH_APP_INSTANCE_NAME
-coop_name=$YNH_APP_COOP_NAME
-street_address=$YNH_APP_STREET_ADDRESS
-zip_code=$YNH_APP_ZIP_CODE
-city=$YNH_APP_CITY
-country=$YNH_APP_COUNTRY
-contact_email=$YH_APP_CONTACT_EMAIL
-contact_number=$YNH_APP_CONTACT_NUMBER
-timezone=$YNH_APP_TIMEZONE
-currency_symbol=$YNH_APP_CURRENCY_SYMBOL
-price_markup=$YNH_APP_PRICE_MARKUP
-tax_vat_percentage=$YNH_APP_TAX_VAT_PERCENTAGE
-use_wiki_plugin=$YNH_APP_USE_WIKI_PLUGIN
-use_messages_plugin=$YNH_APP_USE_MESSAGES_PLUGIN
-notification_reply_email=$YH_APP_NOTIFICATION_REPLY_EMAIL
-notification_sender_email=$YH_APP_NOTIFICATION_SENDER_EMAIL
-admin_email=$YH_APP_ADMIN_EMAIL
+coop_name=$YNH_APP_ARG_COOP_NAME
+street_address="$YNH_APP_ARG_STREET_ADDRESS"
+zip_code=$YNH_APP_ARG_ZIP_CODE
+city=$YNH_APP_ARG_CITY
+country=$YNH_APP_ARG_COUNTRY
+contact_email=$YNH_APP_ARG_CONTACT_EMAIL
+contact_number=$YNH_APP_ARG_CONTACT_NUMBER
+timezone=$YNH_APP_ARG_TIMEZONE
+price_markup=$YNH_APP_ARG_PRICE_MARKUP
+tax_vat_percentage=$YNH_APP_ARG_TAX_VAT_PERCENTAGE
+use_wiki_plugin=$YNH_APP_ARG_USE_WIKI_PLUGIN
+use_messages_plugin=$YNH_APP_ARG_USE_MESSAGES_PLUGIN
+notification_reply_email=$YNH_APP_ARG_NOTIFICATION_REPLY_EMAIL
+notification_sender_email=$YNH_APP_ARG_NOTIFICATION_SENDER_EMAIL
+admin_email=$YNH_APP_ARG_ADMIN_EMAIL
+smtp_domain=$YNH_APP_ARG_SMTP_DOMAIN
 
 #=================================================
 # VALIDATE AND REGISTER $FINAL_PATH
@@ -60,14 +60,13 @@ ynh_app_setting_set --app=$app --key=admin --value=$admin
 ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 ynh_app_setting_set --app=$app --key=language --value=$language
 ynh_app_setting_set --app=$app --key=coop_name --value=$coop_name
-ynh_app_setting_set --app=$app --key=street_address --value=$street_address
+ynh_app_setting_set --app=$app --key=street_address --value="$street_address"
 ynh_app_setting_set --app=$app --key=zip_code --value=$zip_code
 ynh_app_setting_set --app=$app --key=city --value=$city
 ynh_app_setting_set --app=$app --key=country --value=$country
 ynh_app_setting_set --app=$app --key=contact_email --value=$contact_email
 ynh_app_setting_set --app=$app --key=contact_number --value=$contact_number
 ynh_app_setting_set --app=$app --key=timezone --value=$timezone
-ynh_app_setting_set --app=$app --key=currency_symbol --value=$currency_symbol
 ynh_app_setting_set --app=$app --key=price_markup --value=$price_markup
 ynh_app_setting_set --app=$app --key=tax_vat_percentage --value=$tax_vat_percentage
 ynh_app_setting_set --app=$app --key=use_wiki_plugin --value=$use_wiki_plugin
@@ -76,11 +75,12 @@ ynh_app_setting_set --app=$app --key=notification_sender_email --value=$notifica
 ynh_app_setting_set --app=$app --key=notification_reply_email --value=$notification_reply_email
 ynh_app_setting_set --app=$app --key=admin_email --value=$admin_email
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+ynh_app_setting_set --app=$app --key=smtp_domain --value=$smtp_domain
 
 #=================================================
 # INSTALL SYSTEM DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=15
+ynh_script_progression --message="Installing system dependencies..." --weight=15
 
 ynh_install_app_dependencies $pkg_dependencies
 
@@ -120,9 +120,9 @@ ynh_install_ruby $ruby_version
 #=================================================
 ynh_script_progression --message="Finding a free port..." --weight=2
 
-rails_port=$(ynh_find_port --port=3000)
+port=$(ynh_find_port --port=3000)
 
-ynh_app_setting_set --app=$rails_port --key=port --value=$rails_port
+ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
 # GENERATE CONFIGURATION SECRETS
@@ -131,38 +131,64 @@ ynh_script_progression --message="Generating configuration secrets..." --weight=
 
 secret_key_base=$(ynh_string_random 128)
 
-ynh_app_setting_set --app=$secret_key_base --key=secret_key_base --value=$secret_key_base
+ynh_app_setting_set --app=$app --key=secret_key_base --value=$secret_key_base
 
 #=================================================
-# SETUP LOG FILE LOCATION
+# SETUP LOG FILES LOCATION
 #=================================================
 ynh_script_progression --message="Configuring log file location..." --weight=1
 
 foodsoft_log_file=/var/log/foodsoft.log
 resque_log_file=/var/log/resque.log
 
-ynh_app_setting_set --app=$foodsoft_log_file--key=foodsoft_log_file --value=$foodsoft_log_file
-ynh_app_setting_set --app=$resque_log_file--key=resque_log_file --value=$resque_log_file
+ynh_app_setting_set --app=$app --key=foodsoft_log_file --value=$foodsoft_log_file
+ynh_app_setting_set --app=$app --key=resque_log_file --value=$resque_log_file
+
+#=================================================
+# SETUP APPLICATION CONFIGURATION 
+#=================================================
+ynh_script_progression --message="Configuring the application..." --weight=10
+
+cp ../conf/app_config.yml $final_path/config/app_config.yml
+
+ynh_replace_string --match_string="__NAME__" --replace_string=$coop_name --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__STREET_ADDRESS__" --replace_string="$street_address" --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__ZIP_CODE__" --replace_string=$zip_code --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__CITY__" --replace_string=$city --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__COUNTRY__" --replace_string=$country --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__CONTACT_EMAIL__" --replace_string=$contact_email --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__CONTACT_NUMBER__" --replace_string=$contact_number --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__DOMAIN__" --replace_string=$domain --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__PATH__" --replace_string=$path_url --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__LOCALE__" --replace_string=$language --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__PRICE_MARKUP__" --replace_string=$price_markup --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__TAX_VAT_PERCENTAGE__" --replace_string=$tax_vat_percentage --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__USE_WIKI_PLUGIN__" --replace_string=$use_wiki_plugin --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__USE_MESSAGES_PLUGIN__" --replace_string=$use_messages_plugin --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__NOTIFICATION_SENDER_EMAIL__" --replace_string=$notification_sender_email --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__NOTIFICATION_REPLY_EMAIL__" --replace_string=$notification_reply_email --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__ADMIN_EMAIL__" --replace_string=$admin_email --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__PORT__" --replace_string=$port --target_file=$final_path/config/app_config.yml
 
 #=================================================
 # INSTALL APPLICATION DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing Ruby application dependencies..." --weight=50
+ynh_script_progression --message="Installing Ruby $ruby_version dependencies..." --weight=50
 
-echo "gem: --no-rdoc --no-ri" > /etc/gemrc
+gem_args="--no-rdoc --no-ri"
 
-/opt/rbenv/versions/$ruby_version/bin/gem install bundler -v "~> 1"
-/opt/rbenv/versions/$ruby_version/bin/gem install passenger -v "~> 5"
+/opt/rbenv/versions/$ruby_version/bin/gem install $gem_args bundler -v "~> 1"
+/opt/rbenv/versions/$ruby_version/bin/gem install $gem_args passenger -v "~> 5"
 
 cd $final_path
 
 /opt/rbenv/versions/$ruby_version/bin/bundle config build.nokogiri "--use-system-libraries"
 /opt/rbenv/versions/$ruby_version/bin/bundle install --deployment --without development test -j 2
 
-cd - 
+cd -
 
 #=================================================
-# RUN DATABASE SETUP AND MIGRATION WITH ROOT
+# RUN DATABASE SETUP AND MIGRATION WITH ROOT USER
 #=================================================
 ynh_script_progression --message="Initialising the database..." --weight=20
 
@@ -170,7 +196,11 @@ cp ../conf/db_setup.yml $final_path/config/database.yml
 
 ynh_replace_string --match_string="__DB_NAME__" --replace_string=$db_name --target_file=$final_path/config/database.yml
 
+cd $final_path
+
 /opt/rbenv/versions/$ruby_version/bin/bundle exec rake db:setup RAILS_ENV=production SECRET_KEY_BASE=$secret_key_base
+
+cd -
 
 #=================================================
 # RUN DATABASE MIGRATION WITH APPLICATION USER
@@ -179,18 +209,28 @@ ynh_script_progression --message="Migrating the database..." --weight=10
 
 cp ../conf/db_prod.yml $final_path/config/database.yml
 
+db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
+
 ynh_replace_string --match_string="__DB_NAME__" --replace_string=$db_name --target_file=$final_path/config/database.yml
 ynh_replace_string --match_string="__DB_PASSWORD__" --replace_string=$db_pwd --target_file=$final_path/config/database.yml
 ynh_replace_string --match_string="__DB_USER__" --replace_string=$db_user --target_file=$final_path/config/database.yml
 
+cd $final_path
+
 /opt/rbenv/versions/$ruby_version/bin/bundle exec rake db:migrate RAILS_ENV=production SECRET_KEY_BASE=$secret_key_base
+
+cd -
 
 #=================================================
 # PRE-COMPILE ASSETS
 #=================================================
 ynh_script_progression --message="Pre-compiling application assets..." --weight=40
 
+cd $final_path
+
 /opt/rbenv/versions/$ruby_version/bin/bundle exec rake assets:precompile RAILS_ENV=production SECRET_KEY_BASE=$secret_key_base
+
+cd -
 
 #=================================================
 # NGINX CONFIGURATION
@@ -202,7 +242,7 @@ ynh_add_nginx_config
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..." --weight=1
+ynh_script_progression --message="Configuring system user..." --weight=3
 
 ynh_system_user_create --username=$app
 
@@ -211,16 +251,42 @@ ynh_system_user_create --username=$app
 #=================================================
 ynh_script_progression --message="Configuring the systemd services..." --weight=1
 
-ynh_add_systemd_config --service=foodsoft --template=foodsoft
-cp ../conf/foodsoft.env /etc/systemd/system/foodsoft.env
+ynh_add_systemd_config --service=foodsoft --template=foodsoft.service
 
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.service
 ynh_replace_string --match_string="__LOG_FILE__" --replace_string=$foodsoft_log_file --target_file=/etc/systemd/system/foodsoft.service
 
-ynh_add_systemd_config --service=resque  --template=resque
-cp ../conf/resque.env /etc/systemd/system/resque.env
+queue_name=$app
+smtp_domain=$smtp_domain
+smtp_address=$app@$smtp_domain
+smtp_port=25
+smtp_user_name=$app
+
+# TODO(decentral1se): figure out what to do here
+smtp_password=__TODO__
+
+ynh_app_setting_set --app=$app --key=queue_name --value=$queue_name
+
+cp ../conf/foodsoft.env /etc/systemd/system/foodsoft.env
+
+ynh_replace_string --match_string="__REDIS_URL__" --replace_string="127.0.0.1" --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SECRET_KEY_BASE__" --replace_string=$secret_key_base --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__LOG_FILE__" --replace_string=$foodsoft_log_file --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SMTP_DOMAIN__" --replace_string=$smtp_domain --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SMTP_ADDRESS__" --replace_string=$smtp_address --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SMTP_PORT__" --replace_string=$smtp_port --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SMTP_USER_NAME__" --replace_string=$smtp_user_name --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__SMTP_PASSWORD__" --replace_string=$smtp_password --target_file=/etc/systemd/system/foodsoft.env
+
+ynh_add_systemd_config --service=resque  --template=resque.service
 
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/resque.service
+
+cp ../conf/resque.env /etc/systemd/system/resque.env
+
+ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/resque.env
 
 #=================================================
 # MANAGE PERMISSIONS
@@ -257,11 +323,11 @@ yunohost service add resque --description "resque daemon" --log $resque_log_file
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting the systemd services..." --weight=5
 
-ynh_systemd_action --service_name=foodsoft --action="start" --log_path=$foodsoft_log_file
-
-ynh_systemd_action --service_name=resque --action="start" --log_path=$resque_log_file
+# TODO(decentral1se)
+# ynh_script_progression --message="Starting the systemd services..." --weight=5
+# ynh_systemd_action --service_name=foodsoft --action="start" --log_path=$foodsoft_log_file
+# ynh_systemd_action --service_name=resque --action="start" --log_path=$resque_log_file
 
 #=================================================
 # SETUP SSOWAT

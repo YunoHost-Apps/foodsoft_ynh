@@ -5,29 +5,33 @@ production:
   name: __NAME__
   contact:
     street: __STREET_ADDRESS__
-    zip_code: __ZIP_CODE
+    zip_code: __ZIP_CODE__
     city: __CITY__
     country: __COUNTRY__
     email: __CONTACT_EMAIL__
     phone: __CONTACT_NUMBER__
 
-  homepage: https://__DOMAIN__
+  homepage: https://__DOMAIN____PATH__
   help_url: https://github.com/foodcoops/foodsoft/wiki/Doku
   applepear_url: https://github.com/foodcoops/foodsoft/wiki/%C3%84pfel-u.-Birnen
   foodsoft_url: https://github.com/foodcoops/foodsoft
 
   default_locale: __LOCALE__
   time_zone: __TIMEZONE__
-  currency_unit: __CURRENCY_SYMBOL__
+
+  # Note(decentral1se): make configurable in the manifest.json
+  # https://github.com/YunoHost/issues/issues/1398
+  currency_unit: € 
+
   price_markup: __PRICE_MARKUP__
-  tax_default: __TAX_DEFAULT__
+  tax_default: __TAX_VAT_PERCENTAGE__
   tolerance_is_costly: false
   use_nick: false
 
   use_wiki: __USE_WIKI_PLUGIN__
   use_messages: __USE_MESSAGES_PLUGIN__
 
-  page_footer: <a href="https://__DOMAIN__">__COOP_NAME__</a> hosted with <a href="https://yunohost.org/"></a>.
+  page_footer: <a href="https://__DOMAIN____PATH__">__NAME__</a> hosted with <a href="https://yunohost.org/"></a>.
 
   email_sender: __NOTIFICATION_SENDER_EMAIL__
   reply_email_domain: __NOTIFICATION_REPLY_EMAIL__
