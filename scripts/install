@@ -132,7 +132,7 @@ secret_key_base=$(ynh_string_random 128)
 ynh_app_setting_set --app=$app --key=secret_key_base --value=$secret_key_base
 
 #=================================================
-# SETUP LOG FILE LOCATION
+# SETUP LOG FILES LOCATION
 #=================================================
 ynh_script_progression --message="Configuring log file location..." --weight=1
 
@@ -145,12 +145,12 @@ ynh_app_setting_set --app=$app --key=resque_log_file --value=$resque_log_file
 #=================================================
 # INSTALL APPLICATION DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing Ruby application dependencies..." --weight=50
+ynh_script_progression --message="Installing Ruby $ruby_version dependencies..." --weight=50
 
-echo "gem: --no-rdoc --no-ri" > /etc/gemrc
+gem_args="--no-rdoc --no-ri"
 
-/opt/rbenv/versions/$ruby_version/bin/gem install bundler -v "~> 1"
-/opt/rbenv/versions/$ruby_version/bin/gem install passenger -v "~> 5"
+/opt/rbenv/versions/$ruby_version/bin/gem install $gem_args bundler -v "~> 1"
+/opt/rbenv/versions/$ruby_version/bin/gem install $gem_args passenger -v "~> 5"
 
 cd $final_path
 
@@ -160,7 +160,7 @@ cd $final_path
 cd - 
 
 #=================================================
-# RUN DATABASE SETUP AND MIGRATION WITH ROOT
+# RUN DATABASE SETUP AND MIGRATION WITH ROOT USER
 #=================================================
 ynh_script_progression --message="Initialising the database..." --weight=20
 
@@ -176,6 +176,8 @@ ynh_replace_string --match_string="__DB_NAME__" --replace_string=$db_name --targ
 ynh_script_progression --message="Migrating the database..." --weight=10
 
 cp ../conf/db_prod.yml $final_path/config/database.yml
+
+db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 
 ynh_replace_string --match_string="__DB_NAME__" --replace_string=$db_name --target_file=$final_path/config/database.yml
 ynh_replace_string --match_string="__DB_PASSWORD__" --replace_string=$db_pwd --target_file=$final_path/config/database.yml
