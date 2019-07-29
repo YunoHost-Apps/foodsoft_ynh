@@ -251,7 +251,7 @@ ynh_system_user_create --username=$app
 #=================================================
 ynh_script_progression --message="Configuring the systemd services..." --weight=1
 
-ynh_add_systemd_config --service=foodsoft --template=foodsoft
+ynh_add_systemd_config --service=foodsoft --template=foodsoft.service
 
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.service
 ynh_replace_string --match_string="__LOG_FILE__" --replace_string=$foodsoft_log_file --target_file=/etc/systemd/system/foodsoft.service
@@ -280,7 +280,7 @@ ynh_replace_string --match_string="__SMTP_PORT__" --replace_string=$smtp_port --
 ynh_replace_string --match_string="__SMTP_USER_NAME__" --replace_string=$smtp_user_name --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__SMTP_PASSWORD__" --replace_string=$smtp_password --target_file=/etc/systemd/system/foodsoft.env
 
-ynh_add_systemd_config --service=resque  --template=resque
+ynh_add_systemd_config --service=resque  --template=resque.service
 
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/resque.service
 
