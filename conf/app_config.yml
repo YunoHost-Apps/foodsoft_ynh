@@ -11,7 +11,7 @@ production:
     email: __CONTACT_EMAIL__
     phone: __CONTACT_NUMBER__
 
-  homepage: https://__DOMAIN__
+  homepage: https://__DOMAIN____PATH__
   help_url: https://github.com/foodcoops/foodsoft/wiki/Doku
   applepear_url: https://github.com/foodcoops/foodsoft/wiki/%C3%84pfel-u.-Birnen
   foodsoft_url: https://github.com/foodcoops/foodsoft
@@ -24,14 +24,14 @@ production:
   currency_unit: € 
 
   price_markup: __PRICE_MARKUP__
-  tax_default: __TAX_DEFAULT__
+  tax_default: __TAX_VAT_PERCENTAGE__
   tolerance_is_costly: false
   use_nick: false
 
   use_wiki: __USE_WIKI_PLUGIN__
   use_messages: __USE_MESSAGES_PLUGIN__
 
-  page_footer: <a href="https://__DOMAIN__">__COOP_NAME__</a> hosted with <a href="https://yunohost.org/"></a>.
+  page_footer: <a href="https://__DOMAIN____PATH__">__NAME__</a> hosted with <a href="https://yunohost.org/"></a>.
 
   email_sender: __NOTIFICATION_SENDER_EMAIL__
   reply_email_domain: __NOTIFICATION_REPLY_EMAIL__

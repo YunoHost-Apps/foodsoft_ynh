@@ -216,6 +216,15 @@
                 },
                 "default": "admin@foodcoop.test",
                 "example": "admin@foodcoop.test"
+            },
+            {
+                "name": "smtp_domain",
+                "type": "string",
+                "ask": {
+                    "en": "SMTP domain (if different from the main domain)"
+                },
+                "example": "example.com",
+                "default": "example.com"
             }
         ]
     }

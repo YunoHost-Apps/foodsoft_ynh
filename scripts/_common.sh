@@ -24,6 +24,8 @@ pkg_dependencies=" \
   libxml2-dev \
   libxslt-dev \
   libyaml-dev \
+  redis-server \
+  redis-tools \
   zlib1g-dev \
   "
 

@@ -38,6 +38,7 @@ use_messages_plugin=$YNH_APP_ARG_USE_MESSAGES_PLUGIN
 notification_reply_email=$YNH_APP_ARG_NOTIFICATION_REPLY_EMAIL
 notification_sender_email=$YNH_APP_ARG_NOTIFICATION_SENDER_EMAIL
 admin_email=$YNH_APP_ARG_ADMIN_EMAIL
+smtp_domain=$YNH_APP_ARG_SMTP_DOMAIN
 
 #=================================================
 # VALIDATE AND REGISTER $FINAL_PATH
@@ -74,6 +75,7 @@ ynh_app_setting_set --app=$app --key=notification_sender_email --value=$notifica
 ynh_app_setting_set --app=$app --key=notification_reply_email --value=$notification_reply_email
 ynh_app_setting_set --app=$app --key=admin_email --value=$admin_email
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+ynh_app_setting_set --app=$app --key=smtp_domain --value=$smtp_domain
 
 #=================================================
 # INSTALL SYSTEM DEPENDENCIES
@@ -141,6 +143,32 @@ resque_log_file=/var/log/resque.log
 
 ynh_app_setting_set --app=$app --key=foodsoft_log_file --value=$foodsoft_log_file
 ynh_app_setting_set --app=$app --key=resque_log_file --value=$resque_log_file
+
+#=================================================
+# SETUP APPLICATION CONFIGURATION 
+#=================================================
+ynh_script_progression --message="Configuring the application..." --weight=10
+
+cp ../conf/app_config.yml $final_path/config/app_config.yml
+
+ynh_replace_string --match_string="__NAME__" --replace_string=$coop_name --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__STREET_ADDRESS__" --replace_string=$street_address --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__ZIP_CODE__" --replace_string=$zip_code --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__CITY__" --replace_string=$city --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__COUNTRY__" --replace_string=$country --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__CONTACT_EMAIL__" --replace_string=$contact_email --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__CONTACT_NUMBER__" --replace_string=$contact_number --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__DOMAIN__" --replace_string=$domain --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__PATH__" --replace_string=$path_url --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__LOCALE__" --replace_string=$language --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__PRICE_MARKUP__" --replace_string=$price_markup --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__TAX_VAT_PERCENTAGE__" --replace_string=$tax_vat_percentage --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__USE_WIKI_PLUGIN__" --replace_string=$use_wiki_plugin --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__USE_MESSAGES_PLUGIN__" --replace_string=$use_messages_plugin --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__NOTIFICATION_SENDER_EMAIL__ " --replace_string=$notification_sender_email --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__NOTIFICATION_REPLY_EMAIL__ " --replace_string=$notification_reply_email --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__ADMIN_EMAIL__" --replace_string=$admin_email --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__PORT__" --replace_string=$rails_port --target_file=$final_path/config/app_config.yml
 
 #=================================================
 # INSTALL APPLICATION DEPENDENCIES
@@ -218,6 +246,12 @@ ynh_script_progression --message="Configuring system user..." --weight=1
 
 ynh_system_user_create --username=$app
 
+app_user_password=$(ynh_string_random 8)
+
+yunohost user update $app --change-password $app_user_password
+
+ynh_app_setting_set --app=$app --key=app_user_password --value=$app_user_password
+
 #=================================================
 # SETUP SYSTEMD BASED SERVICES
 #=================================================
@@ -226,13 +260,30 @@ ynh_script_progression --message="Configuring the systemd services..." --weight=
 ynh_add_systemd_config --service=foodsoft --template=foodsoft
 cp ../conf/foodsoft.env /etc/systemd/system/foodsoft.env
 
+queue_name=foodsoft_notifier
+ynh_app_setting_set --app=$app --key=queue_name --value=$queue_name
+
+smtp_domain=$smtp_domain
+smtp_address=$app@$smtp_domain
+smtp_port=25
+smtp_user_name=$app
+smtp_password=$app_user_password
+
+ynh_replace_string --match_string="__REDIS_URL__" --replace_string="127.0.0.1" --target_file=/etc/systemd/system/foodsoft.service
+ynh_replace_string --match_string="__SECRET_KEY_BASE__" --replace_string=$secret_key_base --target_file=/etc/systemd/system/foodsoft.service
+ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/foodsoft.service
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.service
 ynh_replace_string --match_string="__LOG_FILE__" --replace_string=$foodsoft_log_file --target_file=/etc/systemd/system/foodsoft.service
+ynh_replace_string --match_string="__SMTP_DOMAIN__" --replace_string=$smtp_domain --target_file=/etc/systemd/system/foodsoft.service
+ynh_replace_string --match_string="__SMTP_ADDRESS__" --replace_string=$smtp_address --target_file=/etc/systemd/system/foodsoft.service
+ynh_replace_string --match_string="__SMTP_PORT__" --replace_string=$smtp_port --target_file=/etc/systemd/system/foodsoft.service
+ynh_replace_string --match_string="__SMTP_USER_NAME__" --replace_string=$smtp_user_name --target_file=/etc/systemd/system/foodsoft.service
+ynh_replace_string --match_string="__SMTP_PASSWORD__" --replace_string=$smtp_password --target_file=/etc/systemd/system/foodsoft.service
 
 ynh_add_systemd_config --service=resque  --template=resque
 cp ../conf/resque.env /etc/systemd/system/resque.env
 
-ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/resque.service
+ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/resque.service
 
 #=================================================
 # MANAGE PERMISSIONS

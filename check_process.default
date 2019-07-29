@@ -22,6 +22,7 @@
 		notification_reply_email="YunoReplyEmail"
 		notification_sender_email="YunoSenderEmail"
 		admin_email="YunoAdmin"
+		smtp_domain="domain.tld"
 	; Checks
 		pkg_linter=1
 		setup_sub_dir=1
