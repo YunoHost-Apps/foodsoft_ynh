@@ -20,7 +20,7 @@ Web-based software to manage a non-profit food coop (product catalog, ordering, 
 
 Please consider the following **before** installing:
 
-* This installation requires Ruby 2.3.x which is an old version of Ruby. For this reason, we need to install the `libssl1.0-dev` package which **removes** the latest `libssl-dev` package. Please keep this in mind if you also self-host other applications on the same Yunohost.
+* This installation requires Ruby 2.3.x which is an old version of Ruby. For this reason, we need to install the `libssl1.0-dev` package which **removes** the latest `libssl-dev` package. Please keep this in mind if you also self-host other applications on the same Yunohost. You can check this by running `apt remove libssl-dev` and seeing if the package manager complains.
 
 * There are many configuration options asked at installation time. Please review the [default configuration file](https://raw.githubusercontent.com/foodcoops/foodsoft/master/config/app_config.yml.SAMPLE) for some help in learning what these are all about.
 
@@ -38,7 +38,7 @@ You can also watch the video walkthrough of using the application over at Vimeo:
 
 ## Configuration
 
-* You can use the web interface to configure everything.
+* You can use the web interface to configure most things.
 
 * Find the main application configuration at `/var/www/foodsoft/config`. Please note, any modifications of these files can be wiped on upgrade. We don't have a good solution for that right now. We aim to make most things configurable at installation time.
 
