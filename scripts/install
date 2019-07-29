@@ -24,7 +24,7 @@ language=$YNH_APP_ARG_LANGUAGE
 password=$YNH_APP_ARG_PASSWORD
 app=$YNH_APP_INSTANCE_NAME
 coop_name=$YNH_APP_ARG_COOP_NAME
-street_address=$YNH_APP_ARG_STREET_ADDRESS
+street_address="$YNH_APP_ARG_STREET_ADDRESS"
 zip_code=$YNH_APP_ARG_ZIP_CODE
 city=$YNH_APP_ARG_CITY
 country=$YNH_APP_ARG_COUNTRY
@@ -60,7 +60,7 @@ ynh_app_setting_set --app=$app --key=admin --value=$admin
 ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 ynh_app_setting_set --app=$app --key=language --value=$language
 ynh_app_setting_set --app=$app --key=coop_name --value=$coop_name
-ynh_app_setting_set --app=$app --key=street_address --value=$street_address
+ynh_app_setting_set --app=$app --key=street_address --value="$street_address"
 ynh_app_setting_set --app=$app --key=zip_code --value=$zip_code
 ynh_app_setting_set --app=$app --key=city --value=$city
 ynh_app_setting_set --app=$app --key=country --value=$country
@@ -152,7 +152,7 @@ ynh_script_progression --message="Configuring the application..." --weight=10
 cp ../conf/app_config.yml $final_path/config/app_config.yml
 
 ynh_replace_string --match_string="__NAME__" --replace_string=$coop_name --target_file=$final_path/config/app_config.yml
-ynh_replace_string --match_string="__STREET_ADDRESS__" --replace_string=$street_address --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__STREET_ADDRESS__" --replace_string="$street_address" --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__ZIP_CODE__" --replace_string=$zip_code --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__CITY__" --replace_string=$city --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__COUNTRY__" --replace_string=$country --target_file=$final_path/config/app_config.yml
