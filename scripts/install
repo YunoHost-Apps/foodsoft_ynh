@@ -28,7 +28,7 @@ street_address=$YNH_APP_ARG_STREET_ADDRESS
 zip_code=$YNH_APP_ARG_ZIP_CODE
 city=$YNH_APP_ARG_CITY
 country=$YNH_APP_ARG_COUNTRY
-contact_email=$YH_APP_ARG_CONTACT_EMAIL
+contact_email=$YNH_APP_ARG_CONTACT_EMAIL
 contact_number=$YNH_APP_ARG_CONTACT_NUMBER
 timezone=$YNH_APP_ARG_TIMEZONE
 currency_symbol=$YNH_APP_ARG_CURRENCY_SYMBOL
@@ -36,9 +36,9 @@ price_markup=$YNH_APP_ARG_PRICE_MARKUP
 tax_vat_percentage=$YNH_APP_ARG_TAX_VAT_PERCENTAGE
 use_wiki_plugin=$YNH_APP_ARG_USE_WIKI_PLUGIN
 use_messages_plugin=$YNH_APP_ARG_USE_MESSAGES_PLUGIN
-notification_reply_email=$YH_APP_ARG_NOTIFICATION_REPLY_EMAIL
-notification_sender_email=$YH_APP_ARG_NOTIFICATION_SENDER_EMAIL
-admin_email=$YH_APP_ARG_ADMIN_EMAIL
+notification_reply_email=$YNH_APP_ARG_NOTIFICATION_REPLY_EMAIL
+notification_sender_email=$YNH_APP_ARG_NOTIFICATION_SENDER_EMAIL
+admin_email=$YNH_APP_ARG_ADMIN_EMAIL
 
 #=================================================
 # VALIDATE AND REGISTER $FINAL_PATH
