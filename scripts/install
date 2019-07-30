@@ -138,9 +138,11 @@ ynh_app_setting_set --app=$app --key=secret_key_base --value=$secret_key_base
 #=================================================
 ynh_script_progression --message="Configuring log file location..." --weight=1
 
-log_file=$final_path/log/production.log
+passenger_log_file=$final_path/log/passener.$port.log
+prod_log_file=$final_path/log/production.log
 
-ynh_app_setting_set --app=$app --key=resque_log_file --value=$log_file
+ynh_app_setting_set --app=$app --key=resque_log_file --value=$prod_log_file
+ynh_app_setting_set --app=$app --key=resque_log_file --value=$passenger_log_file
 
 #=================================================
 # SETUP APPLICATION CONFIGURATION 
@@ -303,16 +305,18 @@ chown -R root: $final_path
 #=================================================
 ynh_script_progression --message="Configuring log rotation..." --weight=1
 
-ynh_use_logrotate --logfile=$log_file
+ynh_use_logrotate --logfile=$passenger_log_file
+
+ynh_use_logrotate --logfile=$prod_log_file
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL
 #=================================================
 ynh_script_progression --message="Advertisting new services..." --weight=1
 
-yunohost service add $app --description "$app daemon" --log $log_file
+yunohost service add $app --description "$app daemon" --log $passenger_log_file
 
-yunohost service add resque --description "resque daemon" --log $log_file
+yunohost service add resque --description "resque daemon" --log $prod_log_file
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -320,8 +324,8 @@ yunohost service add resque --description "resque daemon" --log $log_file
 
 # TODO(decentral1se)
 # ynh_script_progression --message="Starting the systemd services..." --weight=5
-# ynh_systemd_action --service_name=foodsoft --action="start" --log_path=$log_file
-# ynh_systemd_action --service_name=resque --action="start" --log_path=$log_file
+# ynh_systemd_action --service_name=foodsoft --action="start" --log_path=$passenger_log_file
+# ynh_systemd_action --service_name=resque --action="start" --log_path=$prod_log_file
 
 #=================================================
 # SETUP SSOWAT
