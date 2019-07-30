@@ -110,8 +110,6 @@ ynh_script_progression --message="Installing Ruby $ruby_version..." --weight=50
 
 ynh_app_setting_set --app=$app --key=ruby_version --value=$ruby_version
 
-ynh_package_remove $pkgs_to_remove
-
 ynh_install_ruby $ruby_version
 
 #=================================================
