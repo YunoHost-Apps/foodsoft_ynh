@@ -260,6 +260,18 @@ ynh_script_progression --message="Configuring system user..." --weight=3
 ynh_system_user_create --username=$app --home_dir=/home/$app
 
 #=================================================
+# MANAGE PERMISSIONS
+#=================================================
+ynh_script_progression --message="Securing permissions..." --weight=1
+
+chown -R $app:$app $final_path
+
+if [ $is_public -eq 0 ]
+then
+  ynh_app_setting_delete --app=$app --key=skipped_uris
+fi
+
+#=================================================
 # SETUP SYSTEMD BASED SERVICES
 #=================================================
 ynh_script_progression --message="Configuring the systemd services..." --weight=1
@@ -299,20 +311,6 @@ ynh_replace_string --match_string="__PORT__" --replace_string=$ruby_version --ta
 cp ../conf/resque.env /etc/systemd/system/resque.env
 
 ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/resque.env
-
-#=================================================
-# MANAGE PERMISSIONS
-#=================================================
-ynh_script_progression --message="Securing permissions..." --weight=1
-
-chown -R $app:$app $final_path
-
-if [ $is_public -eq 0 ]
-then
-  ynh_app_setting_delete --app=$app --key=skipped_uris
-fi
-
-chown -R root: $final_path
 
 #=================================================
 # SETUP LOGROTATE
