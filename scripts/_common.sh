@@ -41,12 +41,12 @@ export RBENV_ROOT="$rbenv_install_dir"
 
 ynh_install_rbenv () {
   mkdir -p "../conf"
-  echo "SOURCE_URL=https://github.com/rbenv/rbenv/archive/v1.1.1.tar.gz 
-SOURCE_SUM=41f1a60714c55eceb21d692a469aee1ec4f46bba351d0dfcb0c660ff9cf1a1c9" > "../conf/rbenv.src"
+  echo "SOURCE_URL=https://github.com/rbenv/rbenv/archive/v1.1.2.tar.gz 
+SOURCE_SUM=80ad89ffe04c0b481503bd375f05c212bbc7d44ef5f5e649e0acdf25eba86736" > "../conf/rbenv.src"
   ynh_setup_source "$rbenv_install_dir" rbenv
   mkdir -p "../conf"
-  echo "SOURCE_URL=https://github.com/rbenv/ruby-build/archive/v20190314.tar.gz 
-SOURCE_SUM=2cc0f9fdb232042e71edad93a5c3ae108bcd090ea0b6db4e5bb6325547e07968" > "../conf/ruby-build.src"
+  echo "SOURCE_URL=https://github.com/rbenv/ruby-build/archive/v20190615.tar.gz
+SOURCE_SUM=7bcb706f43fd2562a62df79f3f01d71c6a1509fac91c8f14ff9e174dc9d99361" > "../conf/ruby-build.src"
   ynh_setup_source "$rbenv_install_dir/plugins/ruby-build" ruby-build
   (cd $rbenv_install_dir 
    ./src/configure && make -C src)
