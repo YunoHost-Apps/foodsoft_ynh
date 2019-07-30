@@ -44,6 +44,12 @@ You can also watch the video walkthrough of using the application over at Vimeo:
 
 * Find the main application configuration at `/var/www/foodsoft/config`. Please note, any modifications of these files can be wiped on upgrade. We don't have a good solution for that right now. We aim to make most things configurable at installation time.
 
+## Administration
+
+* You have a number of Systemd services to manage. You can check them out with:
+  * systemctl status foodsoft - the rails server managed by passenger
+  * systemctl status resque - the redis task runner
+
 ## Documentation
 
  * Official documentation: https://foodcoops.github.io/foodsoft-hosting/
@@ -91,6 +97,11 @@ To try the testing branch, please proceed like that.
 $ yunohost app install https://github.com/YunoHost-Apps/foodsoft_ynh/tree/testing --debug
 $ yunohost app upgrade foodsoft -u https://github.com/YunoHost-Apps/foodsoft_ynh/tree/testing --debug
 ```
+
+## Notes
+
+* We **do not** re-compile Nginx to use Passenger. We use the [proxy mode](https://www.phusionpassenger.com/library/deploy/standalone/reverse_proxy.html).
+* You can use the [Passenger troubleshooting documentation](https://www.phusionpassenger.com/library/admin/standalone/troubleshooting/ruby/) to help debug Passenger.
 
 Mirroring
 ---------
