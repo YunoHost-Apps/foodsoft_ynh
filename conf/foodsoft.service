@@ -8,7 +8,7 @@ User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__/
 EnvironmentFile=/etc/systemd/system/foodsoft.env
-ExecStart=/opt/rbenv/versions/__RUBY_VERSION__/bin/passenger start --environment production --log-file=__LOG_FILE__
+ExecStart=/opt/rbenv/versions/__RUBY_VERSION__/bin/passenger start --environment production --ruby /opt/rbenv/versions/__RUBY_VERSION__/bin/ruby
 
 [Install]
 WantedBy=multi-user.target

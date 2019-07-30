@@ -138,11 +138,9 @@ ynh_app_setting_set --app=$app --key=secret_key_base --value=$secret_key_base
 #=================================================
 ynh_script_progression --message="Configuring log file location..." --weight=1
 
-foodsoft_log_file=/var/log/foodsoft.log
-resque_log_file=/var/log/resque.log
+log_file=$final_path/log/production.log
 
-ynh_app_setting_set --app=$app --key=foodsoft_log_file --value=$foodsoft_log_file
-ynh_app_setting_set --app=$app --key=resque_log_file --value=$resque_log_file
+ynh_app_setting_set --app=$app --key=resque_log_file --value=$log_file
 
 #=================================================
 # SETUP APPLICATION CONFIGURATION 
@@ -254,7 +252,6 @@ ynh_script_progression --message="Configuring the systemd services..." --weight=
 ynh_add_systemd_config --service=foodsoft --template=foodsoft.service
 
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.service
-ynh_replace_string --match_string="__LOG_FILE__" --replace_string=$foodsoft_log_file --target_file=/etc/systemd/system/foodsoft.service
 
 queue_name=$app
 smtp_domain=$smtp_domain
@@ -273,7 +270,6 @@ ynh_replace_string --match_string="__REDIS_URL__" --replace_string="127.0.0.1" -
 ynh_replace_string --match_string="__SECRET_KEY_BASE__" --replace_string=$secret_key_base --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.env
-ynh_replace_string --match_string="__LOG_FILE__" --replace_string=$foodsoft_log_file --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__SMTP_DOMAIN__" --replace_string=$smtp_domain --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__SMTP_ADDRESS__" --replace_string=$smtp_address --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__SMTP_PORT__" --replace_string=$smtp_port --target_file=/etc/systemd/system/foodsoft.env
@@ -326,8 +322,8 @@ yunohost service add resque --description "resque daemon" --log $resque_log_file
 
 # TODO(decentral1se)
 # ynh_script_progression --message="Starting the systemd services..." --weight=5
-# ynh_systemd_action --service_name=foodsoft --action="start" --log_path=$foodsoft_log_file
-# ynh_systemd_action --service_name=resque --action="start" --log_path=$resque_log_file
+# ynh_systemd_action --service_name=foodsoft --action="start" --log_path=$log_file
+# ynh_systemd_action --service_name=resque --action="start" --log_path=$log_file
 
 #=================================================
 # SETUP SSOWAT
