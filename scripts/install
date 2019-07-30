@@ -238,8 +238,6 @@ cd -
 #=================================================
 ynh_script_progression --message="Setting up the adminstrator account..." --weight=4
 
-root_pwd=$(sudo cat /etc/yunohost/mysql)
-
 admin_first_name=$(ynh_user_get_info --username=$admin --key=firstname)
 admin_last_name=$(ynh_user_get_info --username=$admin --key=lastname)
 admin_email=$(ynh_user_get_info --username=$admin --key=mail)
