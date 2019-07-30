@@ -1,3 +1,7 @@
+# Note(decentral1se): used as a one-off at install time to use root permissions
+# to to the first initialisation steps. This shouldn't be used otherwise as we
+# we do create a system user and the `db_prod.yml` gets used afterwards
+
 production:
   adapter: mysql2
   username: root
