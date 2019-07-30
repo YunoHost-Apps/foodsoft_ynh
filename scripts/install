@@ -254,6 +254,7 @@ ynh_script_progression --message="Configuring the systemd services..." --weight=
 ynh_add_systemd_config --service=foodsoft --template=foodsoft.service
 
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.service
+ynh_replace_string --match_string="__PORT__" --replace_string=$port --target_file=/etc/systemd/system/foodsoft.service
 
 queue_name=$app
 smtp_domain=$smtp_domain

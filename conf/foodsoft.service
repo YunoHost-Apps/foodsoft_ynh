@@ -3,12 +3,13 @@ Description=Web-based software to manage a non-profit food coop
 After=network.target
 
 [Service]
-Type=simple
+Type=forking
 User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__/
 EnvironmentFile=/etc/systemd/system/foodsoft.env
-ExecStart=/opt/rbenv/versions/__RUBY_VERSION__/bin/passenger start --environment production --ruby /opt/rbenv/versions/__RUBY_VERSION__/bin/ruby
+ExecStart=/opt/rbenv/versions/__RUBY_VERSION__/bin/passenger start --environment production --ruby /opt/rbenv/versions/__RUBY_VERSION__/bin/ruby --max-pool-size 16
+ExecStop=/opt/rbenv/versions/__RUBY_VERSION__/bin/passenger stop --pid-file __FINALPATH__/passenger.__PORT__.pid.lock
 
 [Install]
 WantedBy=multi-user.target
