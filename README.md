@@ -111,6 +111,7 @@ $ yunohost app upgrade foodsoft -u https://github.com/YunoHost-Apps/foodsoft_ynh
 
 * We **do not** re-compile Nginx to use Passenger. We use the [proxy mode](https://www.phusionpassenger.com/library/deploy/standalone/reverse_proxy.html).
 * You can use the [Passenger troubleshooting documentation](https://www.phusionpassenger.com/library/admin/standalone/troubleshooting/ruby/) to help debug Passenger.
+* Please see the [YunoHost CI dashboard](https://ci-apps-dev.yunohost.org/jenkins/job/foodsoft_ynh%20(decentral1se)/) for current CI status
 
 Mirroring
 ---------
