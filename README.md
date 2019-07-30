@@ -18,6 +18,10 @@ Web-based software to manage a non-profit food coop (product catalog, ordering, 
 
 **Shipped version:** v4.6.0
 
+## Credentials
+
+[LDAP is not supported yet](https://github.com/foodcoops/foodsoft/issues/439). Setting an administrator password at install time is [also not supported yet](https://github.com/YunoHost-Apps/foodsoft_ynh/issues/9). However, we do support setting the administrator profile details like username, first, last and email. When you first log in as the administrator, you must use the default value os **secret**. You should reset this password immediately.
+
 ## Pre-installation steps
 
 Please consider the following **before** installing:
