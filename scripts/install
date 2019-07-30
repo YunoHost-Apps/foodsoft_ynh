@@ -138,11 +138,11 @@ ynh_app_setting_set --app=$app --key=secret_key_base --value=$secret_key_base
 #=================================================
 ynh_script_progression --message="Configuring log file location..." --weight=1
 
-foodsoft_log_file=/var/log/foodsoft.log
-resque_log_file=/var/log/resque.log
+passenger_log_file=$final_path/log/passener.$port.log
+prod_log_file=$final_path/log/production.log
 
-ynh_app_setting_set --app=$app --key=foodsoft_log_file --value=$foodsoft_log_file
-ynh_app_setting_set --app=$app --key=resque_log_file --value=$resque_log_file
+ynh_app_setting_set --app=$app --key=resque_log_file --value=$prod_log_file
+ynh_app_setting_set --app=$app --key=resque_log_file --value=$passenger_log_file
 
 #=================================================
 # SETUP APPLICATION CONFIGURATION 
@@ -163,8 +163,21 @@ ynh_replace_string --match_string="__PATH__" --replace_string=$path_url --target
 ynh_replace_string --match_string="__LOCALE__" --replace_string=$language --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__PRICE_MARKUP__" --replace_string=$price_markup --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__TAX_VAT_PERCENTAGE__" --replace_string=$tax_vat_percentage --target_file=$final_path/config/app_config.yml
-ynh_replace_string --match_string="__USE_WIKI_PLUGIN__" --replace_string=$use_wiki_plugin --target_file=$final_path/config/app_config.yml
-ynh_replace_string --match_string="__USE_MESSAGES_PLUGIN__" --replace_string=$use_messages_plugin --target_file=$final_path/config/app_config.yml
+
+# Note(decentral1se): Handle YAML truthiness
+if [ $use_wiki_plugin = 0 ]; then
+  ynh_replace_string --match_string="__USE_WIKI_PLUGIN__" --replace_string="False" --target_file=$final_path/config/app_config.yml
+else
+  ynh_replace_string --match_string="__USE_WIKI_PLUGIN__" --replace_string="True" --target_file=$final_path/config/app_config.yml
+fi
+
+# Note(decentral1se): Handle YAML truthiness
+if [ $use_messages_plugin = 0 ]; then
+  ynh_replace_string --match_string="__USE_MESSAGES_PLUGIN__" --replace_string="False" --target_file=$final_path/config/app_config.yml
+else
+  ynh_replace_string --match_string="__USE_MESSAGES_PLUGIN__" --replace_string="True" --target_file=$final_path/config/app_config.yml
+fi
+
 ynh_replace_string --match_string="__NOTIFICATION_SENDER_EMAIL__" --replace_string=$notification_sender_email --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__NOTIFICATION_REPLY_EMAIL__" --replace_string=$notification_reply_email --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__ADMIN_EMAIL__" --replace_string=$admin_email --target_file=$final_path/config/app_config.yml
@@ -178,7 +191,7 @@ ynh_script_progression --message="Installing Ruby $ruby_version dependencies..."
 gem_args="--no-rdoc --no-ri"
 
 /opt/rbenv/versions/$ruby_version/bin/gem install $gem_args bundler -v "~> 1"
-/opt/rbenv/versions/$ruby_version/bin/gem install $gem_args passenger -v "~> 5"
+/opt/rbenv/versions/$ruby_version/bin/gem install $gem_args passenger -v "~> 6"
 
 cd $final_path
 
@@ -244,7 +257,7 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Configuring system user..." --weight=3
 
-ynh_system_user_create --username=$app
+ynh_system_user_create --username=$app --home_dir=/home/$app
 
 #=================================================
 # SETUP SYSTEMD BASED SERVICES
@@ -254,7 +267,7 @@ ynh_script_progression --message="Configuring the systemd services..." --weight=
 ynh_add_systemd_config --service=foodsoft --template=foodsoft.service
 
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.service
-ynh_replace_string --match_string="__LOG_FILE__" --replace_string=$foodsoft_log_file --target_file=/etc/systemd/system/foodsoft.service
+ynh_replace_string --match_string="__PORT__" --replace_string=$port --target_file=/etc/systemd/system/foodsoft.service
 
 queue_name=$app
 smtp_domain=$smtp_domain
@@ -268,12 +281,10 @@ smtp_password=__TODO__
 ynh_app_setting_set --app=$app --key=queue_name --value=$queue_name
 
 cp ../conf/foodsoft.env /etc/systemd/system/foodsoft.env
-
-ynh_replace_string --match_string="__REDIS_URL__" --replace_string="127.0.0.1" --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__REDIS_URL__" --replace_string="redis://localhost:6379" --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__SECRET_KEY_BASE__" --replace_string=$secret_key_base --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.env
-ynh_replace_string --match_string="__LOG_FILE__" --replace_string=$foodsoft_log_file --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__SMTP_DOMAIN__" --replace_string=$smtp_domain --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__SMTP_ADDRESS__" --replace_string=$smtp_address --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__SMTP_PORT__" --replace_string=$smtp_port --target_file=/etc/systemd/system/foodsoft.env
@@ -283,6 +294,7 @@ ynh_replace_string --match_string="__SMTP_PASSWORD__" --replace_string=$smtp_pas
 ynh_add_systemd_config --service=resque  --template=resque.service
 
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/resque.service
+ynh_replace_string --match_string="__PORT__" --replace_string=$ruby_version --target_file=/etc/systemd/system/resque.service
 
 cp ../conf/resque.env /etc/systemd/system/resque.env
 
@@ -307,27 +319,31 @@ chown -R root: $final_path
 #=================================================
 ynh_script_progression --message="Configuring log rotation..." --weight=1
 
-ynh_use_logrotate --logfile=$foodsoft_log_file
+ynh_use_logrotate --logfile=$passenger_log_file
 
-ynh_use_logrotate --logfile=$resque_log_file
+ynh_use_logrotate --logfile=$prod_log_file
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL
 #=================================================
 ynh_script_progression --message="Advertisting new services..." --weight=1
 
-yunohost service add $app --description "$app daemon" --log $foodsoft_log_file
+yunohost service add $app --description "$app daemon" --log $passenger_log_file
 
-yunohost service add resque --description "resque daemon" --log $resque_log_file
+yunohost service add resque --description "resque daemon" --log $prod_log_file
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 
-# TODO(decentral1se)
-# ynh_script_progression --message="Starting the systemd services..." --weight=5
-# ynh_systemd_action --service_name=foodsoft --action="start" --log_path=$foodsoft_log_file
-# ynh_systemd_action --service_name=resque --action="start" --log_path=$resque_log_file
+TODO(decentral1se)
+ynh_script_progression --message="Starting the systemd services..." --weight=5
+
+ynh_systemd_action --service_name=foodsoft --action="enable" --log_path=$passenger_log_file
+ynh_systemd_action --service_name=foodsoft --action="start" --log_path=$passenger_log_file
+
+ynh_systemd_action --service_name=resque --action="enable" --log_path=$prod_log_file
+ynh_systemd_action --service_name=resque --action="start" --log_path=$prod_log_file
 
 #=================================================
 # SETUP SSOWAT
