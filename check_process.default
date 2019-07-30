@@ -5,7 +5,6 @@
 		admin="jane"	(USER)
 		language="fr"
 		is_public=1	(PUBLIC|public=1|private=0)
-		password="pass"
 		coop_name="YunoFoodCoop"
 		street_address="YunoStreet"
 		zip_code="YunoZipCode"
@@ -44,4 +43,4 @@ Notification=none
 ;;; Upgrade options
 	; commit=CommitHash
 		name=Name and date of the commit.
-		manifest_arg=domain=DOMAIN&path=PATH&admin=USER&language=fr&is_public=1&password=pass
+		manifest_arg=domain=DOMAIN&path=PATH&admin=USER&language=fr&is_public=1
