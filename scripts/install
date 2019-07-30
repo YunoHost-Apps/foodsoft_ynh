@@ -241,7 +241,7 @@ ynh_script_progression --message="Setting up the adminstrator account..." --weig
 root_pwd=$(sudo cat /etc/yunohost/mysql)
 
 admin_first_name=$(ynh_user_get_info --username=$admin --key=firstname)
-admin_last_name=$(ynh_user_get_info -username=$admin --key=lastname)
+admin_last_name=$(ynh_user_get_info --username=$admin --key=lastname)
 admin_email=$(ynh_user_get_info --username=$admin --key=mail)
 
 # Note(decentral1se): figure out how to update the password and salt. Not sure which to use
