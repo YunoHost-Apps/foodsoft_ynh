@@ -31,7 +31,7 @@ production:
   use_wiki: __USE_WIKI_PLUGIN__
   use_messages: __USE_MESSAGES_PLUGIN__
 
-  page_footer: <a href="https://__DOMAIN____PATH__">__NAME__</a> hosted with <a href="https://yunohost.org/"></a>.
+  page_footer: <a href="https://__DOMAIN____PATH__">__NAME__</a> hosted with <a href="https://yunohost.org/">YunoHost</a>.
 
   email_sender: __NOTIFICATION_SENDER_EMAIL__
   reply_email_domain: __NOTIFICATION_REPLY_EMAIL__
