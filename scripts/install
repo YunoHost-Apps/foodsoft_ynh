@@ -268,8 +268,7 @@ smtp_password=__TODO__
 ynh_app_setting_set --app=$app --key=queue_name --value=$queue_name
 
 cp ../conf/foodsoft.env /etc/systemd/system/foodsoft.env
-
-ynh_replace_string --match_string="__REDIS_URL__" --replace_string="127.0.0.1" --target_file=/etc/systemd/system/foodsoft.env
+ynh_replace_string --match_string="__REDIS_URL__" --replace_string="redis://localhost:6379" --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__SECRET_KEY_BASE__" --replace_string=$secret_key_base --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__QUEUE_NAME__" --replace_string=$queue_name --target_file=/etc/systemd/system/foodsoft.env
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/foodsoft.env
