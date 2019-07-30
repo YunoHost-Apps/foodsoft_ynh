@@ -163,8 +163,21 @@ ynh_replace_string --match_string="__PATH__" --replace_string=$path_url --target
 ynh_replace_string --match_string="__LOCALE__" --replace_string=$language --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__PRICE_MARKUP__" --replace_string=$price_markup --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__TAX_VAT_PERCENTAGE__" --replace_string=$tax_vat_percentage --target_file=$final_path/config/app_config.yml
-ynh_replace_string --match_string="__USE_WIKI_PLUGIN__" --replace_string=$use_wiki_plugin --target_file=$final_path/config/app_config.yml
-ynh_replace_string --match_string="__USE_MESSAGES_PLUGIN__" --replace_string=$use_messages_plugin --target_file=$final_path/config/app_config.yml
+
+# Note(decentral1se): Handle YAML truthiness
+if [ $use_wiki_plugin = 0 ]; then
+  ynh_replace_string --match_string="__USE_WIKI_PLUGIN__" --replace_string="False" --target_file=$final_path/config/app_config.yml
+else
+  ynh_replace_string --match_string="__USE_WIKI_PLUGIN__" --replace_string="True" --target_file=$final_path/config/app_config.yml
+fi
+
+# Note(decentral1se): Handle YAML truthiness
+if [ $use_messages_plugin = 0 ]; then
+  ynh_replace_string --match_string="__USE_MESSAGES_PLUGIN__" --replace_string="False" --target_file=$final_path/config/app_config.yml
+else
+  ynh_replace_string --match_string="__USE_MESSAGES_PLUGIN__" --replace_string="True" --target_file=$final_path/config/app_config.yml
+fi
+
 ynh_replace_string --match_string="__NOTIFICATION_SENDER_EMAIL__" --replace_string=$notification_sender_email --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__NOTIFICATION_REPLY_EMAIL__" --replace_string=$notification_reply_email --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__ADMIN_EMAIL__" --replace_string=$admin_email --target_file=$final_path/config/app_config.yml
