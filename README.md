@@ -31,6 +31,7 @@ Please consider the following **before** installing:
 * The `install`, `backup` and `restore` actions work.
 * No `change_url` action provided yet
 * This is a new package and quite experimental. Please test with care.
+* Make sure to review issues and on-going work on [the issue tracker](https://github.com/YunoHost-Apps/foodsoft_ynh/issues)
 
 ## Screenshots
 
