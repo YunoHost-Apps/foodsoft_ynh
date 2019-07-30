@@ -303,18 +303,16 @@ chown -R root: $final_path
 #=================================================
 ynh_script_progression --message="Configuring log rotation..." --weight=1
 
-ynh_use_logrotate --logfile=$foodsoft_log_file
-
-ynh_use_logrotate --logfile=$resque_log_file
+ynh_use_logrotate --logfile=$log_file
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL
 #=================================================
 ynh_script_progression --message="Advertisting new services..." --weight=1
 
-yunohost service add $app --description "$app daemon" --log $foodsoft_log_file
+yunohost service add $app --description "$app daemon" --log $log_file
 
-yunohost service add resque --description "resque daemon" --log $resque_log_file
+yunohost service add resque --description "resque daemon" --log $log_file
 
 #=================================================
 # START SYSTEMD SERVICE
