@@ -162,6 +162,7 @@ ynh_replace_string --match_string="__PATH__" --replace_string=$path_url --target
 ynh_replace_string --match_string="__LOCALE__" --replace_string=$language --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__PRICE_MARKUP__" --replace_string=$price_markup --target_file=$final_path/config/app_config.yml
 ynh_replace_string --match_string="__TAX_VAT_PERCENTAGE__" --replace_string=$tax_vat_percentage --target_file=$final_path/config/app_config.yml
+ynh_replace_string --match_string="__TIMEZONE__" --replace_string=$timezone --target_file=$final_path/config/app_config.yml
 
 # Note(decentral1se): Handle YAML truthiness
 if [ $use_wiki_plugin = 0 ]; then
