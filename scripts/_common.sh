@@ -41,7 +41,7 @@ export RBENV_ROOT="$rbenv_install_dir"
 
 ynh_install_rbenv () {
   mkdir -p "../conf"
-  echo "SOURCE_URL=https://github.com/rbenv/rbenv/archive/v1.1.2.tar.gz 
+  echo "SOURCE_URL=https://github.com/rbenv/rbenv/archive/v1.1.2.tar.gz
 SOURCE_SUM=80ad89ffe04c0b481503bd375f05c212bbc7d44ef5f5e649e0acdf25eba86736" > "../conf/rbenv.src"
   ynh_setup_source "$rbenv_install_dir" rbenv
   mkdir -p "../conf"
