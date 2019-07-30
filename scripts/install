@@ -250,9 +250,9 @@ admin_email=$(ynh_user_get_info --username=$admin --key=mail)
 # |  1 | admin        | 7a2fe6291c632523300b8ab4ac70559ea0b706fa | g/6muzHs       ...
 # +----+--------------+------------------------------------------+--------------- ...
 
-mysql -u root -e "connect $app; update users set first_name = '$admin_first_name' where nick = 'admin'"
-mysql -u root -e "connect $app; update users set last_name = '$admin_last_name' where nick = 'admin'"
-mysql -u root -e "connect $app; update users set nick = '$admin' where nick = 'admin'"
+mysql -u root -e "connect $app; update users set first_name = '$admin_first_name' where nick = 'admin';"
+mysql -u root -e "connect $app; update users set last_name = '$admin_last_name' where nick = 'admin';"
+mysql -u root -e "connect $app; update users set nick = '$admin' where nick = 'admin';"
 
 #=================================================
 # PRE-COMPILE ASSETS
