@@ -32,9 +32,8 @@ Please consider the following **before** installing:
 
 ## Status
 
-* The `install` and `remove` actions work.
-* No `change_url` action provided yet
 * This is a new package and quite experimental. Please test with care.
+* Only the `install` and `remove` actions work. Please see [this ticket](https://github.com/YunoHost-Apps/foodsoft_ynh/issues/1) for progress on enabling the rest.
 * Make sure to review issues and on-going work on [the issue tracker](https://github.com/YunoHost-Apps/foodsoft_ynh/issues)
 
 ## Screenshots
