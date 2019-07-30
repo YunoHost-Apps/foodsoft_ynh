@@ -2,14 +2,14 @@ production:
   multi_coop_install: false
   default_scope: 'f'
 
-  name: __NAME__
+  name: "__NAME__"
   contact:
-    street: __STREET_ADDRESS__
-    zip_code: __ZIP_CODE__
-    city: __CITY__
-    country: __COUNTRY__
+    street: "__STREET_ADDRESS__"
+    zip_code: "__ZIP_CODE__"
+    city: "__CITY__"
+    country: "__COUNTRY__"
     email: __CONTACT_EMAIL__
-    phone: __CONTACT_NUMBER__
+    phone: "__CONTACT_NUMBER__"
 
   homepage: https://__DOMAIN____PATH__
   help_url: https://github.com/foodcoops/foodsoft/wiki/Doku
