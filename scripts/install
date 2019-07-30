@@ -281,6 +281,7 @@ ynh_replace_string --match_string="__SMTP_PASSWORD__" --replace_string=$smtp_pas
 ynh_add_systemd_config --service=resque  --template=resque.service
 
 ynh_replace_string --match_string="__RUBY_VERSION__" --replace_string=$ruby_version --target_file=/etc/systemd/system/resque.service
+ynh_replace_string --match_string="__PORT__" --replace_string=$ruby_version --target_file=/etc/systemd/system/resque.service
 
 cp ../conf/resque.env /etc/systemd/system/resque.env
 

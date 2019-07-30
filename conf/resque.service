@@ -9,7 +9,7 @@ Group=__APP__
 WorkingDirectory=__FINALPATH__/
 EnvironmentFile=/etc/systemd/system/resque.env
 ExecStart=/opt/rbenv/versions/__RUBY_VERSION__/bin/bundle exec rake resque:work
-ExecStop=/opt/rbenv/versions/__RUBY_VERSION__/bin/bundle exec rake resque:stop_workers
+ExecStop=cat __FINALPATH__/resque.__PORT__.pid.lock | xargs kill -s QUIT
 
 [Install]
 WantedBy=multi-user.target
