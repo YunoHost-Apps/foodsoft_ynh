@@ -178,7 +178,7 @@ ynh_script_progression --message="Installing Ruby $ruby_version dependencies..."
 gem_args="--no-rdoc --no-ri"
 
 /opt/rbenv/versions/$ruby_version/bin/gem install $gem_args bundler -v "~> 1"
-/opt/rbenv/versions/$ruby_version/bin/gem install $gem_args passenger -v "~> 5"
+/opt/rbenv/versions/$ruby_version/bin/gem install $gem_args passenger -v "~> 6"
 
 cd $final_path
 
