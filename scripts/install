@@ -242,7 +242,7 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Configuring system user..." --weight=3
 
-ynh_system_user_create --username=$app
+ynh_system_user_create --username=$app --home_dir=/home/$app
 
 #=================================================
 # SETUP SYSTEMD BASED SERVICES
