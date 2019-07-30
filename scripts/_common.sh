@@ -4,9 +4,6 @@
 # COMMON VARIABLES
 #=================================================
 
-# https://github.com/rvm/rvm/issues/3862
-pkgs_to_remove="libssl-dev"
-
 pkg_dependencies=" \
   autoconf \
   bison \
@@ -20,7 +17,7 @@ pkg_dependencies=" \
   libncurses5-dev \
   libreadline-dev \
   libreadline6-dev \
-  libssl1.0-dev \
+  libssl-dev \
   libxml2-dev \
   libxslt-dev \
   libyaml-dev \
@@ -29,7 +26,7 @@ pkg_dependencies=" \
   zlib1g-dev \
   "
 
-ruby_version="2.3.8"
+ruby_version="2.4.6"
 
 #=================================================
 # EXPERIMENTAL HELPERS
