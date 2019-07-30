@@ -26,6 +26,12 @@ Please consider the following **before** installing:
 
 * There are many configuration options asked at installation time. Please review the [default configuration file](https://raw.githubusercontent.com/foodcoops/foodsoft/master/config/app_config.yml.SAMPLE) for some help in learning what these are all about.
 
+## Status
+
+* The `install`, `backup` and `restore` actions work.
+* No `change_url` action provided yet
+* This is a new package and quite experimental. Please test with care.
+
 ## Screenshots
 
 ![](https://www.turnkeylinux.org/files/images/screenshots/foodsoft_dashboard_after_login.jpg)
