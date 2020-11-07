@@ -1,22 +1,18 @@
-# Foodsoft
+# Foodsoft for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/foodsoft.svg)](https://dash.yunohost.org/appci/app/foodsoft)
-
+[![Integration level](https://dash.yunohost.org/integration/foodsoft.svg)](https://dash.yunohost.org/appci/app/foodsoft) ![](https://ci-apps.yunohost.org/ci/badges/foodsoft.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/foodsoft.maintain.svg)  
 [![Install Foodsoft with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=foodsoft)
 
 *[Lire ce readme en français.](./README_fr.md)*
 
-> This package allow you to install [Foodsoft](https://foodcoops.github.io/) quickly and simply on a YunoHost server.
-
+> This package allow you to install Foodsoft quickly and simply on a YunoHost server.
 *If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to know how to install and enjoy it.*
 
 ## Overview
 
-Web-based software to manage a non-profit food coop (product catalog, ordering, accounting, job scheduling). A food cooperative is a group of people that buy food from suppliers of their own choosing. A collective do-it-yourself supermarket. Members order their products online and collect them on a specified day. And all put in a bit of work to make that possible. Foodsoft facilitates the process.
+[Foodsoft](https://foodcoops.github.io/) is a web-based software to manage a non-profit food coop (product catalog, ordering, accounting, job scheduling). A food cooperative is a group of people that buy food from suppliers of their own choosing. A collective do-it-yourself supermarket. Members order their products online and collect them on a specified day. And all put in a bit of work to make that possible. Foodsoft facilitates the process.
 
-> https://foodcoops.github.io/
-
-**Shipped version:** v4.6.0
+**Shipped version:** 4.6.0
 
 ## Credentials
 
@@ -73,9 +69,8 @@ You can also watch the video walkthrough of using the application over at Vimeo:
 
 #### Supported architectures
 
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/foodsoft%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/foodsoft/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/foodsoft%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/foodsoft/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/foodsoft%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/foodsoft/)
-* Stretch x86-64b - [![Build Status](https://ci-stretch.nohost.me/ci/logs/foodsoft%20%28Apps%29.svg)](https://ci-stretch.nohost.me/ci/apps/foodsoft/)
 
 ## Limitations
 
@@ -93,18 +88,15 @@ You can also watch the video walkthrough of using the application over at Vimeo:
  * Upstream app repository: https://github.com/foodcoops/foodsoft
  * YunoHost website: https://yunohost.org/
 
-Developers info
-----------------
-
-**Only if you want to use a testing branch for coding, instead of merging directly into master.**
+## Developers info
 
 Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/foodsoft_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
-
 ```
-$ yunohost app install https://github.com/YunoHost-Apps/foodsoft_ynh/tree/testing --debug
-$ yunohost app upgrade foodsoft -u https://github.com/YunoHost-Apps/foodsoft_ynh/tree/testing --debug
+sudo yunohost app install https://github.com/YunoHost-Apps/foodsoft_ynh/tree/testing --debug
+or
+sudo yunohost app upgrade foodsoft -u https://github.com/YunoHost-Apps/foodsoft_ynh/tree/testing --debug
 ```
 
 ## Notes
