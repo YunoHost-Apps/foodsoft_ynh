@@ -5,7 +5,7 @@
     "description": {
         "en": "Web-based software to manage a non-profit food coop (product catalog, ordering, accounting, job scheduling)"
     },
-    "version": "1.0~ynh1",
+    "version": "4.6.0~ynh1",
     "url": "https://foodcoops.github.io/foodsoft-hosting/",
     "license": "AGPL-3.0-or-later",
     "maintainer": {
@@ -14,7 +14,7 @@
         "url": "https://decentral1.se/"
     },
     "requirements": {
-        "yunohost": ">= 3.6"
+        "yunohost": ">= 3.8.1"
     },
     "multi_instance": true,
     "services": [
