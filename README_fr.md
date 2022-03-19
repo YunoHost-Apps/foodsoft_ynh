@@ -57,4 +57,3 @@ sudo yunohost app install https://github.com/YunoHost-Apps/foodsoft_ynh/tree/tes
 ou
 sudo yunohost app upgrade foodsoft -u https://github.com/YunoHost-Apps/foodsoft_ynh/tree/testing --debug
 ```
-
