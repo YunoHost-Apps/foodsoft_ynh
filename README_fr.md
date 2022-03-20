@@ -1,12 +1,13 @@
 # Foodsoft pour YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/foodsoft.svg)](https://dash.yunohost.org/appci/app/foodsoft) ![](https://ci-apps.yunohost.org/ci/badges/foodsoft.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/foodsoft.maintain.svg)  
-[![Installer Foodsoft avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=foodsoft)
+[![Niveau d'intégration](https://dash.yunohost.org/integration/foodsoft.svg)](https://dash.yunohost.org/appci/app/foodsoft) ![](https://ci-apps.yunohost.org/ci/badges/foodsoft.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/foodsoft.maintain.svg)  
+[![Installer Foodsoft avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=foodsoft)
 
-*[Read this readme in english.](./README.md)* 
+*[Read this readme in english.](./README.md)*
+*[Lire ce readme en français.](./README_fr.md)*
 
-> *Ce package vous permet d'installer Foodsoft rapidement et simplement sur un serveur YunoHost.  
-Si vous n'avez pas YunoHost, consultez [le guide](https://yunohost.org/#/install) pour apprendre comment l'installer.*
+> *Ce package vous permet d'installer Foodsoft rapidement et simplement sur un serveur YunoHost.
+Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
 
 ## Vue d'ensemble
 
@@ -15,7 +16,16 @@ Les membres peuvent commander leurs produits en ligne et les collectent le jour 
 Chaque personne fait sa part du travail pour rendre cela possible.
 Foodsoft facilite le processus.
 
-**Version embarquée :** 4.7.1.1
+
+**Version incluse :** 4.7.1.1~ynh1
+
+**Démo :** https://foodcoops.github.io/demo/
+
+## Captures d'écran
+
+![](./doc/screenshots/foodsoft_dashboard_after_login.jpg)
+
+## Avertissements / informations importantes
 
 ## Identifiants
 
@@ -32,20 +42,13 @@ Ceci est un nouveau paquet plutôt expérimental. Veuillez tester avec précauti
 Seules les action installer et désinstaller fonctionnent.Veuillez consulter (ce ticket)[https://github.com/YunoHost-Apps/foodsoft_ynh/issues/1] pour voir où ça en est pour le reste.
 Assurez-vous de vérifier les problèmes et le travail en cours dans le tracker de bug.
 
-#### Architectures supportées
+## Documentations et ressources
 
-* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/foodsoft%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/foodsoft/)
-* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/foodsoft%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/foodsoft/)
-
-
-## Liens
-
- * Signaler un bug : https://github.com/YunoHost-Apps/foodsoft_ynh/issues
- * Site de l'application : https://foodcoops.github.io/
- * Dépôt de l'application principale : https://github.com/foodcoops/foodsoft
- * Site web YunoHost : https://yunohost.org/
-
----
+* Site officiel de l'app : https://foodcoops.github.io/foodsoft-hosting
+* Documentation officielle de l'admin : https://foodcoops.github.io/foodsoft-hosting/
+* Dépôt de code officiel de l'app : https://github.com/foodcoops/foodsoft
+* Documentation YunoHost pour cette app : https://yunohost.org/app_foodsoft
+* Signaler un bug : https://github.com/YunoHost-Apps/foodsoft_ynh/issues
 
 ## Informations pour les développeurs
 
@@ -57,3 +60,5 @@ sudo yunohost app install https://github.com/YunoHost-Apps/foodsoft_ynh/tree/tes
 ou
 sudo yunohost app upgrade foodsoft -u https://github.com/YunoHost-Apps/foodsoft_ynh/tree/testing --debug
 ```
+
+**Plus d'infos sur le packaging d'applications :** https://yunohost.org/packaging_apps
