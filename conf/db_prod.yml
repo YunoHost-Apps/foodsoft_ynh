@@ -1,10 +1,10 @@
 production:
   adapter: mysql2
-  database: __DB_NAME__
-  host: localhost
-  password: __DB_PASSWORD__
-  pool: 5
-  port: 3306
   reconnect: false
-  socket: /var/run/mysqld/mysqld.sock
+  pool: 5
+  host: localhost
+  database: __DB_NAME__
   username: __DB_USER__
+  password: __DB_PWD__
+  port: 3306
+  socket: /var/run/mysqld/mysqld.sock

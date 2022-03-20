@@ -4,6 +4,6 @@
 
 production:
   adapter: mysql2
-  username: root
   database: __DB_NAME__
+  username: root
   socket: /var/run/mysqld/mysqld.sock

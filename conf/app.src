@@ -1,5 +1,7 @@
-SOURCE_URL=https://github.com/foodcoops/foodsoft/archive/v4.6.0.tar.gz
-SOURCE_SUM=10610e14c9296091426799196541625deb89f496ffe5ccf5ad07b4d333c45828
+SOURCE_URL=https://codeload.github.com/foodcoops/foodsoft/tar.gz/e8a28d7fee2796b9e0d7c9c97a407867cf06dc84
+SOURCE_SUM=177950abd2159468f81bf0f8b2f767dcd30eb3baa19228afc977bee5d4547c78
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
+SOURCE_FILENAME=
+SOURCE_EXTRACT=true

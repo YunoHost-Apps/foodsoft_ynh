@@ -15,7 +15,7 @@ Les membres peuvent commander leurs produits en ligne et les collectent le jour 
 Chaque personne fait sa part du travail pour rendre cela possible.
 Foodsoft facilite le processus.
 
-**Version embarquée :** 4.6.0
+**Version embarquée :** 4.7.1.1
 
 ## Identifiants
 
