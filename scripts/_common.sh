@@ -7,6 +7,7 @@
 pkg_dependencies="redis-server redis-tools nodejs"
 
 build_pkg_dependencies="libv8-dev default-libmysqlclient-dev libxml2-dev libxslt1-dev libmagic-dev"
+#libgdbm3
 
 ruby_version="2.6.9"
 
@@ -32,7 +33,7 @@ export rbenv_root="$rbenv_install_dir"
 
 ruby_dependencies=""
 pkg_dependencies="$pkg_dependencies $ruby_dependencies"
-build_ruby_dependencies="autoconf bison build-essential pkg-config libjemalloc-dev libssl-dev libreadline-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libyaml-dev libcurl3-dev libgdbm-dev libgdbm3"
+build_ruby_dependencies="autoconf bison build-essential pkg-config libjemalloc-dev libssl-dev libreadline-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libyaml-dev libcurl3-dev libgdbm-dev"
 build_pkg_dependencies="$build_pkg_dependencies $build_ruby_dependencies"
 
 # Load the version of Ruby for an app, and set variables.
