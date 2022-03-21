@@ -291,7 +291,7 @@ yunohost service add resque --description "resque daemon" --log=$final_path/log/
 ynh_script_progression --message="Starting a systemd service..." --weight=5
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Started"
+ynh_systemd_action --service_name=$app --action="start" --log_path="$final_path/log/passenger.$port.log" --line_match="Passenger core online"
 ynh_systemd_action --service_name=resque --action="start" --log_path=systemd --line_match="Started"
 
 #=================================================
