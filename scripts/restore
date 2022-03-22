@@ -126,8 +126,8 @@ ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description "$app daemon" --log $final_path/log/passenger.$port.log
-yunohost service add resque --description "resque daemon" --log $final_path/log/production.log
+yunohost service add $app --description "$app daemon" --log=$final_path/log/passenger.$port.log
+yunohost service add resque --description "resque daemon" --log=$final_path/log/production.log
 
 #=================================================
 # START SYSTEMD SERVICE
